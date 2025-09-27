@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hariez Muazzaz — My Page</title>
+<meta name="color-scheme" content="light dark">
+<style>
+:root {
+  --bg: #f9fbff;
+  --fg: #121826;
+  --muted: #64748b;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --accent: #3f5efb;
+  --accent-2: #7f53ac;
+  --link: #2748ff;
+  --shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+:root:has(#theme:checked) {
+  --bg: #0f172a;
+  --fg: #f1f5f9;
+  --muted: #94a3b8;
+  --card: #1e293b;
+  --border: #334155;
+  --accent: #60a5fa;
+  --accent-2: #818cf8;
+  --link: #93c5fd;
+  --shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height:1.6; background-image: url('code.jpg'); background-size: cover; background-attachment: fixed; }
+
+.header { background: var(--card); box-shadow: var(--shadow); padding:1rem 0; margin-bottom:2rem; }
+.nav { display:flex; justify-content:space-between; align-items:center; }
+.logo { font-weight:bold; font-size:1.2rem; color:var(--accent); text-decoration:none; }
+nav ul { list-style:none; display:flex; gap:1.5rem; }
+nav a { text-decoration:none; color:var(--fg); font-weight:500; }
+nav a:hover { color:var(--accent); }
+
+#theme { display:none; }
+.theme-toggle { position:fixed; top:1rem; right:1rem; background:var(--card); border:1px solid var(--border); padding:0.4rem 0.7rem; border-radius:20px; cursor:pointer; font-size:0.9rem; box-shadow:var(--shadow); }
+
+.container { width:min(90%,1000px); margin:0 auto; }
+.card { background: var(--card); border:1px solid var(--border); border-radius:16px; padding:2rem; margin-bottom:2rem; box-shadow: var(--shadow); }
+
+.hero { display:flex; flex-direction:column; gap:1.5rem; background: linear-gradient(135deg,#c2e9fb,#a1c4fd); }
+.hero-inner { display:flex; flex-wrap:wrap; gap:2rem; align-items:center; }
+.bio-content { flex:1 1 55%; }
+.bio-photo img { max-width:200px; border-radius:50%; border:3px solid var(--border); box-shadow: var(--shadow); }
+
+.contact-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1.5rem; }
+.contact-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem; box-shadow: var(--shadow); }
+
+/* ---- GOALS ---- */
+#goals { background: linear-gradient(135deg,#ffe7d1,#ffd5f5); padding:2rem; border-radius:16px; box-shadow:var(--shadow); }
+.goals-font { font-family: "Georgia", serif !important; }
+#goals h2 { text-align:center; margin-bottom:1rem; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+
+/* Custom bullets */
+.goals-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.goals-list > li {
+    position: relative;
+    margin-bottom: 1rem;
+    padding-left: 30px;
+}
+
+.goals-list > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 16px;
+    height: 16px;
+    background: url('bullet1.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+.goals-list ul li {
+    position: relative;
+    margin-bottom: 0.5rem;
+    padding-left: 25px;
+}
+
+.goals-list ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 12px;
+    height: 12px;
+    background: url('bullet2.jpg') no-repeat center center;
+    background-size: contain;
+}
+
+/* ---- ACHIEVEMENTS ---- */
+.achievements { display:flex; flex-wrap:wrap; gap:1rem; }
+.achievement-card { flex:1 1 45%; background: var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem; text-align:center; box-shadow: var(--shadow); }
+.achievement-card img { max-width:120px; height:auto; border-radius:8px; margin-bottom:0.5rem; display:block; margin-left:auto; margin-right:auto; background:transparent; object-fit:contain; }
+
+/* ---- SKILLS ---- */
+#skills { background: rgba(230, 247, 255,0.95); border-radius:16px; }
+.skills-list { display: flex; flex-direction: column; gap: 1rem; padding:1rem; }
+.skill-pair { display: flex; gap: 1rem; align-items: stretch; }
+.skill-bar { flex: 1; display: flex; flex-direction: column; justify-content: center; background: #dceeff; border-radius: 12px; padding: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.skill-bar span { font-weight: bold; margin-bottom: 0.5rem; }
+.progress-container { background: #ccc; border-radius: 8px; height: 16px; overflow: hidden; position: relative; margin-top:0.5rem; }
+.progress-container::after { content: attr(data-percent) "%"; position: absolute; right:8px; top:0; height:16px; display:flex; align-items:center; font-weight:600; font-size:0.85rem; color:var(--fg); }
+.progress-bar { height:100%; border-radius:8px; width:0; animation: fillBar 2s forwards; }
+@keyframes fillBar { 0% { width:0; } }
+.skill-video { flex: 1; overflow:hidden; border-radius:12px; box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
+.skill-video iframe { width:100%; height:120px; border-radius:12px; }
+
+/* ---- REFLECTION ---- */
+#reflection { background: #fff0f5; padding:2rem; border-radius:12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.reflection-font { font-family: "Courier New", monospace !important; }
+#reflection table { width:100%; border-collapse:collapse; margin-top:1rem; }
+#reflection th, #reflection td { border:1px solid var(--border); padding:0.5rem; text-align:left; }
+#reflection th { background:#a855f7; color:#fff; }
+
+/* ---- FOOTER ---- */
+footer { text-align: center; padding:1.5rem 0; color: var(--muted); font-size:0.9rem; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width:768px) {
+  .hero-inner { flex-direction: column; text-align:center; }
+  .skill-pair { flex-direction: column; align-items: flex-start; }
+  .skill-video iframe { width:100%; height:200px; }
+}
+</style>
+</head>
+
+
+<div class="app">
+<header class="header">
+<div class="container nav">
+<a class="logo" href="../index.html">Homepage</a>
+<nav>
+<ul>
+<li><a href="../resources.html">Resources</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="../ayman/ayman.html">Ayman</a></li>
+<li><a href="../salah/salah.html">Salah</a></li>
+<li><a href="../hazyq/hazyq.html">Hazyq</a></li>
+
+</ul>
+</nav>
+</div>
+</header>
+
+<main class="container">
+
+<!-- BIO -->
+<section id="bio" class="card hero">
+<div class="hero-inner">
+<div class="bio-content">
+<h1>Hello, I’m Muazzaz</h1>
+<p>Hello there! My name is <strong>Hariez Muazzaz</strong>, an 18-year-old <strong>Foundation in Computing</strong> student at MMU Cyberjaya. I come from Ampang, Selangor, and previously studied at <strong>SBPI Rawang</strong> in the Science stream. Before coming to MMU, I had <strong>no prior experience with coding</strong> and had never learned about HTML, CSS, C++, or any programming concepts. My first encounters with coding were completely new and challenging, but they sparked my curiosity and determination to learn. I enjoy breaking problems into smaller parts and building solutions step by step, which helps me understand and retain new concepts. Documenting what I learn also allows me to track my progress and reflect on areas I need to improve. I hope to explore more advanced programming languages, build meaningful projects, and eventually contribute to technology that makes life smarter and simpler. My journey at MMU is a completely new adventure, full of challenges and exciting opportunities, and I am eager to embrace every part of it.</p>
+</div>
+<figure class="bio-photo"><img src="muazzaz.png.jpg" alt="Hariez Muazzaz smiling"></figure>
+</div>
+
+<div class="contact-grid">
+<div class="contact-card">📧 <strong>Email:</strong> <a href="mailto:muazzaz07@gmail.com"><br>Let’s connect! You can email me at muazzaz07@gmail.com</a></div>
+<div class="contact-card">📞 <strong>Phone:</strong> <a href="tel:+60183293867"><br>Reach out anytime via phone or WhatsApp : <br>+60 18-329 3867</a></div>
+<div class="contact-card">📸 <strong>Instagram:</strong> <a href="https://instagram.com/hriezmuazz" target="_blank"><br>Stay in touch via Instagram: @hriezmuazz</a></div>
+<div class="contact-card">🎵 <strong>TikTok:</strong> <a href="https://www.tiktok.com/@ion.slowly" target="_blank"><br>Check out my TikTok: @ion.slowly</a></div>
+</div>
+</section>
+
+<!-- GOALS & ACHIEVEMENTS -->
+<section id="goals" class="card goals-font">
+<h2>Learning Goals & Achievements</h2>
+<div class="grid-2">
+<div>
+<h3>Goals</h3>
+<ul class="goals-list">
+<li><strong>Certified Data Engineer</strong>
+    <ul><li>I aim to become a certified data engineer to gain formal recognition of my skills, strengthen my technical expertise, and open up opportunities in the data engineering and analytics field.</li></ul>
+</li>
+<li><strong>Explore More Programming Languages</strong>
+    <ul><li>Learning additional programming languages will broaden my problem-solving abilities, allow me to work on diverse projects, and make me more adaptable in the rapidly evolving tech industry.</li></ul>
+</li>
+<li><strong>Contribute to Data Science in Malaysia</strong>
+    <ul><li>I want to use my skills to advance data science initiatives locally, help Malaysian organizations make data-driven decisions, and contribute to the growth of the country’s tech ecosystem.</li></ul>
+</li>
+<li><strong>Achieve a Career & Support Family</strong>
+    <ul><li>I aim to build a successful career that provides financial stability and enables me to support my family, ensuring their well-being and creating opportunities for their future.</li></ul>
+</li>
+<li><strong>Active Event Participant at MMU</strong>
+    <ul><li>I aim to actively participate in a wide range of events and activities at MMU to gain diverse experiences, build practical skills, foster meaningful connections, and enhance my self-confidence and personal growth while contributing positively to the university community.</li></ul>
+</li>
+</ul>
+</div>
+<div>
+<h3>Achievements</h3>
+<div class="achievements">
+<div class="achievement-card"><img src="slipspm.png.png" alt="SPM Results"><p><strong>12A in SPM</strong><br>I achieved an exceptional academic milestone by scoring 12As in my Sijil Pelajaran Malaysia (SPM) examinations</p></div>
+<div class="achievement-card"><img src="grad.png.png" alt="YTM Scholar"><p><strong>YTM Scholarship</strong><br>I was awarded a full scholarship by Yayasan Telekom Malaysia (YTM), recognizing my academic excellence and leadership potential</p></div>
+<div class="achievement-card"><img src="rumahkasih.JPG" alt="Charity"><p><strong>Joined Rumah Kasih</strong><br>Participated in the ‘Rumah Kasih’ welfare activity in Kuang, organized by the Sekretariat Rakan Muda (SRM) club, contributing to community service and supporting underprivileged groups.</p></div>
+<div class="achievement-card"><img src="hoki.jpg" alt="Hockey"><p><strong>National hockey achievement</strong><br>Achieved 3rd place in the highly competitive state-level SBP hockey tournament, proudly representing Selangor and Putrajaya schools with dedication and teamwork.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="card">
+<h2>Skills</h2>
+<div class="skills-list">
+
+<!-- HTML -->
+<div class="skill-pair">
+  <div class="skill-bar">
+    <span>HTML</span>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:0.5rem;">
+      HTML (HyperText Markup Language) is the backbone of web pages. 
+      It defines the structure of content, including headings, paragraphs, and images.
+    </p>
+    <div class="progress-container" data-percent="51">
+      <div class="progress-bar" style="width:51%; background:#e34c26;"></div>
+    </div>
+  </div>
+  <div class="skill-video">
+    <iframe src="https://www.youtube.com/embed/HD13eq_Pmp8" title="HTML Tutorial" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- CSS -->
+<div class="skill-pair">
+  <div class="skill-bar">
+    <span>CSS</span>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:0.5rem;">
+      CSS (Cascading Style Sheets) styles HTML elements. 
+      It controls layout, colors, fonts, and responsiveness of web pages.
+    </p>
+    <div class="progress-container" data-percent="42">
+      <div class="progress-bar" style="width:42%; background:#264de4;"></div>
+    </div>
+  </div>
+  <div class="skill-video">
+    <iframe src="https://www.youtube.com/embed/wRNinF7YQqQ" title="CSS Tutorial" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- Python -->
+<div class="skill-pair">
+  <div class="skill-bar">
+    <span>Python</span>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:0.5rem;">
+      Python is a versatile programming language used for automation, 
+      data analysis, and building applications. Its simple syntax is beginner-friendly.
+    </p>
+    <div class="progress-container" data-percent="8">
+      <div class="progress-bar" style="width:8%; background:#306998;"></div>
+    </div>
+  </div>
+  <div class="skill-video">
+    <iframe src="https://www.youtube.com/embed/K5KVEU3aaeQ" title="Python Tutorial" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<div class="skill-pair">
+  <div class="skill-bar">
+    <span>JavaScript</span>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:0.5rem;">
+      JavaScript makes web pages interactive and dynamic. 
+      It allows manipulation of content and responding to user actions.
+    </p>
+    <div class="progress-container" data-percent="6">
+      <div class="progress-bar" style="width:30%; background:#f0db4f;"></div>
+    </div>
+  </div>
+  <div class="skill-video">
+    <iframe src="https://www.youtube.com/embed/W6NZfCO5SIk" title="JavaScript Tutorial" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+</div>
+</section>
+
+<!-- REFLECTION -->
+<section id="reflection" class="card reflection-font">
+<h2>Reflection</h2>
+<div class="reflection-columns" style="display:flex; flex-wrap:wrap; gap:2rem;">
+  <div style="flex:1 1 45%;">
+    <h3>My Journey</h3>
+    <ul>
+      <li>First weeks at MMU were all about adjusting to campus life, meeting new people, and figuring out schedules.</li>
+      <li>Working on this website helped me put theory into practice and see my progress visually.</li>
+    </ul>
+  </div>
+  <div style="flex:1 1 45%;">
+    <h3>What I Learned</h3>
+    <ul>
+      <li>Breaking tasks into smaller steps makes learning new skills easier.</li>
+      <li>Applying knowledge to projects, like this website, is a great way to reinforce learning.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Reflection Table</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>What I Actually Did</th>
+<th>Next Step / Try Next Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Starting at MMU</td>
+<td>Adjusted to campus life, explored facilities, and learned how to manage study schedules</td>
+<td>Stay organized and set clear learning goals for each semester</td>
+</tr>
+<tr>
+<td>HTML & CSS Project</td>
+<td>Built structured layouts & styled pages</td>
+<td>Practice responsive design and flex/grid more</td>
+</tr>
+<tr>
+<td>Team Projects</td>
+<td>Improved communication & teamwork</td>
+<td>Engage in larger group projects</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+
+
+<br><br>
+<footer>
+<div class="container">© 2025 Hariez Muazzaz |</div>
+</footer>
+</div>
+</body>
+</html>
