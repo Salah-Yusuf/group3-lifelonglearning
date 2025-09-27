@@ -1,0 +1,352 @@
+/* =========================================================
+= THEME & TOKENS
+========================================================= */
+
+/* ---- TOKENS (light default) ---- */
+:root {
+	--bg: #f9fbff;
+	--fg: #121826;
+	--muted: #64748b;
+	--card: #ffffff;
+	--border: #e5e7eb;
+	--accent: #3f5efb;
+	--accent-2: #7f53ac;
+	--link: #2748ff;
+	--shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- DARK OVERRIDE (toggled by #theme) ---- */
+#theme:checked ~ .app {
+	--bg: #0b0f1a;
+	--fg: #e6ecff;
+	--muted: #a3aed0;
+	--card: #121728;
+	--border: #1f2a44;
+	--accent: #7aa2ff;
+	--accent-2: #c084fc;
+	--link: #8ab4ff;
+	--shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+= GLOBAL RESET & APP SHELL
+========================================================= */
+
+/* ---- BASIC RESET / LAYOUT ---- */
+* { box-sizing: border-box }
+html, body { margin: 0 }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, 'Noto Sans', sans-serif;
+	line-height: 1.6;
+	color: var(--fg);
+}
+
+/* ---- APP WRAPPER (owns page background) ---- */
+.app {
+	min-height: 100dvh;
+	background: var(--bg) url('pattern.svg') repeat; /* light pattern */
+	background-size: 220px;
+	color: var(--fg);
+	display: flex;
+	flex-direction: column;
+}
+#theme:checked ~ .app {
+	background: var(--bg) url('pattern-dark.svg') repeat; /* dark pattern */
+	background-size: 220px;
+}
+
+/* ---- CONTAINER ---- */
+.container { width: min(1100px, 92%); margin: 0 auto }
+.contact-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1.5rem; }
+.contact-card { background: var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem; box-shadow: var(--shadow);}
+
+/* =========================================================
+= THEME TOGGLE UI
+========================================================= */
+
+#theme { display: none } /* checkbox hidden but accessible for :checked */
+.theme-toggle {
+	position: fixed; right: 16px; bottom: 16px; z-index: 100;
+	border: 1px solid #e5e7eb; background: #fff; color: #111;
+	border-radius: 999px; padding: 10px 14px; cursor: pointer;
+	box-shadow: 0 6px 20px rgba(0,0,0,.08); user-select: none;
+}
+
+/* =========================================================
+= HEADER / NAV
+========================================================= */
+
+.header {
+	border-bottom: 1px solid var(--border);
+	background: linear-gradient(120deg, color-mix(in oklab, var(--card), transparent 60%), transparent);
+	backdrop-filter: blur(6px);
+	position: sticky; top: 0; z-index: 10;
+}
+.nav {
+	display: flex; align-items: center; justify-content: space-between;
+	gap: 16px; padding: 14px 0;
+}
+.logo { color: var(--fg); text-decoration: none; font-weight: 800 }
+nav ul { list-style: none; display: flex; gap: 14px; margin: 0; padding: 0 }
+nav a {
+	color: var(--fg); text-decoration: none; padding: 8px 10px; border-radius: 10px
+}
+nav a:hover {
+	/* --- Fallback for browsers that don't support color-mix --- */
+	background: rgba(0,0,0,0.06);
+	/* --- Modern --- */
+	background: color-mix(in oklab, var(--card), var(--fg) 8%);
+}
+
+
+/* =========================================================
+= TYPOGRAPHY, LINKS, CARDS
+========================================================= */
+
+.card {
+	background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+	padding: 20px; box-shadow: var(--shadow); margin: 18px 0; position: relative; overflow: hidden;
+}
+.card > * + * { margin-top: 16px } /* vertical rhythm within any card */
+
+h1, h2, h3 { margin: .5em 0 }
+h3 { margin-top: 6px } /* small top separation when stacked */
+a { color: var(--link) }
+a:hover { text-decoration: underline }
+.hint { color: var(--muted); font-size: .92rem }
+
+/* =========================================================
+= LAYOUT HELPERS
+========================================================= */
+
+.grid-2 {
+	display: grid; grid-template-columns: 1.2fr 0.8fr;
+	gap: 24px; align-items: center;
+}
+@media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr } }
+
+/* Split box = outer border + responsive inner divider */
+.grid-2.split {
+	background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+	overflow: hidden;
+}
+.grid-2.split > * { padding: 20px }
+@media (min-width: 901px) { .grid-2.split > :last-child { border-left: 1px solid var(--border) } }
+@media (max-width: 900px) { .grid-2.split > :last-child { border-top: 1px solid var(--border) } }
+
+/* Goals column spacing (list ↔ table) */
+#goals .grid-2.split > div { display: flex; flex-direction: column; gap: 14px }
+#goals ul { margin: 0 }
+#goals .data { margin-top: 4px }
+
+/* =========================================================
+= HERO (merged layout + decorative blobs)
+========================================================= */
+
+.hero {
+	position: relative;
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 20px;
+}
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr } }
+
+.hero h1 {
+	margin-top: 0;
+	background: linear-gradient(90deg, var(--accent-2), var(--accent));
+	-webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero img {
+	max-width: 220px; width: 100%; aspect-ratio: 1/1; object-fit: cover;
+	border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+
+/* Decorative blobs (pure CSS = counts as background/decorative images) */
+.hero::before {
+	content: '';
+	position: absolute;
+	top: -120px; left: -80px;
+	width: 300px; height: 300px;
+	background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
+	opacity: .15; border-radius: 50%;
+}
+.hero::after {
+	content: '';
+	position: absolute;
+	bottom: -140px; right: -100px;
+	width: 380px; height: 380px;
+	background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+	opacity: .12; border-radius: 50%;
+}
+
+/* =========================================================
+= CONTACT TABLE (bio card)
+========================================================= */
+
+.contact {
+	width: 50%; border-collapse: collapse; margin: 1em 0;
+	background: var(--card); border: 1px solid var(--border);
+	border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+}
+.contact th {
+	text-align: left; padding: 12px; width: 140px; color: var(--fg);
+	/* --- Fallback --- */
+	background: #f0f0f0;
+	/* --- Modern --- */
+	background: color-mix(in oklab, var(--card), var(--fg) 6%);
+}
+
+.contact td { padding: 12px; color: var(--fg); border-left: 1px solid var(--border) }
+.contact tr + tr th, .contact tr + tr td { border-top: 1px solid var(--border) }
+
+/* =========================================================
+= ACHIEVEMENTS GRID
+========================================================= */
+
+.achievements {
+	list-style: none; padding: 0; margin: 0;
+	display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
+}
+#goals .achievements { margin-top: 4px } /* align with goals column rhythm */
+
+.achv figure {
+	margin: 0; background: var(--card); border: 1px solid var(--border);
+	border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+.achv:hover figure { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.18) }
+
+.achv img {
+	display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; transition: transform .25s ease;
+}
+.achv:hover img { transform: scale(1.03) }
+
+.achv figcaption { padding: 8px 10px; font-weight: 600; text-align: center }
+
+/* =========================================================
+= SKILLS (progress bars)
+========================================================= */
+
+.skills { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px }
+.skills li { display: grid; gap: 6px }
+.skills span { font-weight: 600 }
+
+.bar {
+	width: 100%; height: 10px; border-radius: 999px; border: 1px solid var(--border);
+	background: color-mix(in oklab, var(--card), var(--fg) 8%); overflow: hidden;
+}
+#theme:checked ~ .app .bar { background: color-mix(in oklab, var(--card), #000 24%) }
+.bar i {
+	display: block; height: 100%; border-radius: 999px;
+	background: linear-gradient(90deg, var(--accent-2), var(--accent));
+}
+
+/* =========================================================
+= GENERIC DATA TABLE (Goals Progress)
+========================================================= */
+.data {
+	width: 100%;
+	border-collapse: collapse;
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: var(--shadow);
+	margin-top: 1rem;
+	font-size: .95rem;
+}
+
+.data thead th {
+	text-align: left;
+	padding: 10px 12px;
+	font-weight: 700;
+	color: var(--fg);
+	/* --- Fallback --- */
+	background: #f0f0f0;
+	/* --- Modern --- */
+	background: color-mix(in oklab, var(--card), var(--fg) 6%);
+	white-space: nowrap;
+}
+
+.data td {
+	padding: 10px 12px;
+	border-top: 1px solid var(--border);
+}
+
+.data tbody tr:nth-child(even) td {
+	/* --- Fallback --- */
+	background: #f9f9f9;
+	/* --- Modern --- */
+	background: color-mix(in oklab, var(--card), var(--fg) 4%);
+}
+
+/* =========================================================
+= BADGES (Labelling)
+========================================================= */
+
+.badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 0;
+	margin: 8px 0 0;
+	list-style: none;
+}
+.badges li {
+	color: #fff;
+	background: linear-gradient(135deg, var(--accent-2), var(--accent));
+	padding: 6px 10px;
+	border-radius: 999px;
+	box-shadow: var(--shadow);
+	font-size: 0.92rem;
+}
+
+/* =========================================================
+= VIDEO (YouTube embed, reduced frame)
+========================================================= */
+
+.video-block { margin-top: 20px }
+.video-block h3 {
+	margin: 0 0 12px; font-size: 1.1rem; font-weight: 600; text-align: center;
+}
+.video {
+	position: relative; padding-bottom: 40%; height: 0; overflow: hidden;
+	border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow);
+	background: var(--card);
+	max-width: 640px;  /* reduce frame width on wide screens */
+	margin: 0 auto;    /* center inside the card */
+}
+.video iframe {
+	position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+	border: 0; border-radius: 16px;
+}
+
+/* =========================================================
+= CUSTOM BULLETS (2-level list)
+========================================================= */
+
+.bullets { list-style: none; padding-left: 0 }
+.bullets > li { position: relative; padding-left: 30px; margin: 8px 0 }
+.bullets > li::before {
+	content: '';
+	position: absolute; left: 0; top: .35em; width: 18px; height: 18px;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237f53ac'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z'/></svg>") no-repeat center / contain;
+}
+.bullets ul { list-style: none; margin: 6px 0 0 0; padding-left: 26px }
+.bullets ul > li { position: relative; padding-left: 22px; margin: 6px 0 }
+.bullets ul > li::before {
+	content: '';
+	position: absolute; left: 0; top: .42em; width: 12px; height: 12px;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><circle cx='6' cy='6' r='6' fill='%233f5efb'/></svg>") no-repeat center / contain;
+}
+
+/* =========================================================
+= FOOTER
+========================================================= */
+
+footer {
+	margin-top: auto; border-top: 1px solid var(--border);
+	color: var(--muted); padding: 20px 0;
+}

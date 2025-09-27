@@ -1,0 +1,714 @@
+/* =========================================================
+= THEME & TOKENS
+========================================================= */
+
+/* ---- TOKENS (light default) ---- */
+:root {
+	--bg: #f9fbff;
+	--fg: #121826;
+	--muted: #64748b;
+	--card: #ffffff;
+	--border: #e5e7eb;
+	--accent: #3f5efb;
+	--accent-2: #904dd2;
+	--link: #2748ff;
+	--shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- DARK OVERRIDE (toggled by #theme) ---- */
+#theme:checked ~ .app {
+	--bg: #0b0f1a;
+	--fg: #e6ecff;
+	--muted: #a3aed0;
+	--card: #121728;
+	--border: #1f2a44;
+	--accent: #7aa2ff;
+	--accent-2: #c084fc;
+	--link: #8ab4ff;
+	--shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+= GLOBAL RESET & APP SHELL
+========================================================= */
+
+* { box-sizing: border-box }
+html, body { margin: 0 }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, 'Noto Sans', sans-serif;
+	line-height: 1.6;
+	color: var(--fg);
+}
+
+.app {
+	min-height: 100dvh;
+	background: var(--bg) url('pattern.svg') repeat;
+	background-size: 220px;
+	color: var(--fg);
+	display: flex;
+	flex-direction: column;
+}
+#theme:checked ~ .app {
+	background: var(--bg) url('pattern-dark.svg') repeat;
+	background-size: 220px;
+}
+
+.container { width: min(1100px, 92%); margin: 0 auto }
+
+/* =========================================================
+= THEME TOGGLE UI
+========================================================= */
+
+#theme { display: none; }
+.theme-toggle {
+	position: fixed; right: 16px; bottom: 16px; z-index: 1000;
+	border: 1px solid var(--border);
+	background: var(--card);
+	color: var(--fg);
+	border-radius: 999px; padding: 10px 14px; cursor: pointer;
+	box-shadow: var(--shadow); user-select: none;
+}
+
+/* =========================================================
+= HEADER / NAV
+========================================================= */
+
+.header {
+  background: var(--card);
+  border: 0;
+  border-bottom: 5px solid transparent;
+  border-image: linear-gradient(90deg, var(--accent-2), var(--accent)) 1;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav {
+	display: flex; align-items: center; justify-content: space-between;
+	gap: 16px; padding: 14px 0;
+}
+.logo { color: var(--fg); text-decoration: none; font-weight: 800 }
+
+nav ul { list-style: none; display: flex; gap: 14px; margin: 0; padding: 0 }
+nav a {
+	color: var(--fg); text-decoration: none; padding: 8px 10px; border-radius: 10px;
+}
+nav a:hover {
+	background: color-mix(in oklab, var(--accent), var(--accent-2), var(--card) 20%);
+	color: var(--fg);
+	box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-2);
+	transition: all 0.28s ease;
+}
+
+/* =========================================================
+= TYPOGRAPHY, LINKS, CARDS
+========================================================= */
+
+.card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 20px;
+  margin: 18px 0;
+  background: var(--card);
+  color: var(--fg);
+  border: none;
+  box-shadow: var(--shadow);
+}
+
+/* =========================================================
+= LAYOUT HELPERS
+========================================================= */
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+.goals-grid .div1 { grid-area: 1 / 1 / 2 / 2; }
+.goals-grid .div2 { grid-area: 1 / 2 / 2 / 3; }
+.goals-grid .div3 { grid-area: 2 / 1 / 3 / 3; }
+
+.goals-grid .div3 {
+  padding: 16px;
+}
+
+@media (max-width: 900px) {
+  .goals-grid { grid-template-columns: 1fr; }
+  .goals-grid .div1,
+  .goals-grid .div2,
+  .goals-grid .div3 { grid-area: auto; }
+}
+
+/* =========================================================
+= HERO
+========================================================= */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 40px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #34d399, #14b8a6, #3b82f6);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0,0,0,.18);
+}
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr } }
+.hero h1 { margin-top: 0; font-size: 2.2rem; color: #fff }
+.hero img {
+  max-width: 460px; width: 100%; aspect-ratio: 1/1; object-fit: cover;
+  border-radius: 16px; border: none; outline: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+
+.hero img {
+  width: 460px;           /* fixed width */
+  height: 360px;          /* fixed height */
+  object-fit: cover;      /* ensures the image fills without stretching */
+  border-radius: 16px;
+  border: none;
+  outline: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero img:hover {
+  transform: scale(1.08) rotate(2deg); /* <-- space instead of comma */
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+
+
+/* =========================================================
+= CONTACT TABLE
+========================================================= */
+
+.contact {
+	width: 50%; border-collapse: collapse; margin: 1em 0;
+	background: var(--card); border: 1px solid var(--border);
+	border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+}
+.contact th {
+	text-align: left; padding: 12px; width: 140px; color: var(--fg);
+	background: color-mix(in oklab, var(--card), var(--fg) 6%);
+}
+.contact td {
+	padding: 12px; color: var(--fg); border-left: 1px solid var(--border);
+	vertical-align: middle;
+}
+.contact tr + tr th, .contact tr + tr td { border-top: 1px solid var(--border) }
+
+.contact td .icon {
+  width: 20px; height: 20px; margin-right: 8px;
+  display: inline-block; vertical-align: middle;
+}
+
+/* =========================================================
+= ACHIEVEMENTS (new grid)
+========================================================= */
+
+/* --- Achievements (equal squares + centered last card + hover) --- */
+
+/* grid stays centered overall, but control items individually */
+.achv-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 240px);
+  gap: 24px;
+  justify-content: start; /* align top row to the left */
+}
+
+/* center ONLY the 3rd card */
+.achv-grid .achv-card:nth-child(3) {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+/* responsive fallback: stack on small screens */
+@media (max-width: 640px) {
+  .achv-grid { grid-template-columns: 1fr; }
+  .achv-grid .achv-card { justify-self: center; }
+}
+
+/* square cards */
+.achv-card {
+  width: 240px;
+  height: 240px;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease; /* hover */
+}
+
+/* hover (and keyboard focus) */
+.achv-card:hover,
+.achv-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.22);
+}
+
+/* media area keeps the image square & cropped */
+.achv-card .media {
+  flex: 1 1 auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+.achv-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .25s ease; /* subtle zoom on hover */
+}
+
+.achv-card:hover img,
+.achv-card:focus-within img {
+  transform: scale(1.03);
+}
+
+/* caption: readable in light/dark (uses theme tokens) */
+.achv-card figcaption {
+  flex: 0 0 auto;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: .2px;
+  padding: 10px 8px;
+  background: var(--card);                 /* adapts to theme */
+  color: var(--fg);                        /* adapts to theme */
+  border-top: 1px solid var(--border);     /* adapts to theme */
+}
+
+/* Nudge Achievements grid slightly left */
+#goals .achv-grid {
+  margin-left: -75px; /* adjust until it looks balanced */
+}
+
+/* Nudge only the bottom card */
+#goals .achv-grid .achv-card:nth-child(3) {
+  transform: translate(40px, -15px); /* right + slightly up */
+}
+
+/* Nudge only the top row down */
+#goals .achv-grid .achv-card:nth-child(1),
+#goals .achv-grid .achv-card:nth-child(2) {
+  margin-top: 55px; /* adjust value to taste */
+}
+
+/* ===== Goals grid: place Learning Plan (left) + Timeline (right) on row 2 */
+.goals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+.goals-grid .div1 { grid-area: 1 / 1 / 2 / 2; } /* Goals list + table (left)   */
+.goals-grid .div2 { grid-area: 1 / 2 / 2 / 3; } /* Achievements grid (right)   */
+.goals-grid .div3 { grid-area: 2 / 1 / 3 / 2; } /* Learning Plan (left)        */
+.goals-grid .div4 { grid-area: 2 / 2 / 3 / 3; } /* Timeline (right)            */
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 900px) {
+  .goals-grid { grid-template-columns: 1fr; }
+  .goals-grid .div1,
+  .goals-grid .div2,
+  .goals-grid .div3,
+  .goals-grid .div4 { grid-area: auto; }
+}
+
+/* ===== Vertical Timeline (right side) */
+.timeline {
+  position: relative;
+  margin: 10px 0 0 0;
+  padding-left: 40px;
+  border-left: 3px solid var(--accent);
+}
+.timeline .entry { position: relative; margin: 18px 0; }
+.timeline .dot {
+  position: absolute; left: -10px; top: 4px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  box-shadow: 0 0 6px rgba(0,0,0,.2);
+}
+.timeline p { margin: 0; line-height: 1.5; color: var(--fg); }
+.timeline strong { color: var(--accent-2); }
+
+/* Optional: keep the timeline visible while scrolling on desktop */
+@media (min-width: 901px) {
+  .goals-grid .div4 { position: sticky; top: 84px; }
+}
+
+/* Make timeline bar longer */
+.timeline {
+  position: relative;
+  margin: 20px 0;
+  padding-left: 30px;
+  border-left: 6px solid var(--accent); /* thicker line */
+  min-height: 300px; /* force it longer */
+}
+
+/* Each entry dot */
+.timeline .dot {
+  position: absolute;
+  left: -12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  box-shadow: 0 0 8px rgba(0,0,0,.3);
+}
+
+/* Space entries evenly */
+.timeline .entry {
+  position: relative;
+  margin: 100px 0; /* increase gap between dots */
+}
+
+/* Text style: date colored, description white */
+.timeline p {
+  margin: 0 0 0 16px; /* top right bottom left */
+  line-height: 1.6;
+  color: #fff;
+}
+
+.timeline strong {
+  color: #ffd816; /* keep dates colored */
+}
+
+
+/* =========================================================
+= SKILLS
+========================================================= */
+
+.skills { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px }
+.skills li { display: grid; gap: 6px }
+.skills span { font-weight: 600 }
+
+.bar {
+	width: 100%; height: 10px; border-radius: 999px; border: 1px solid var(--border);
+	background: color-mix(in oklab, var(--card), var(--fg) 8%); overflow: hidden;
+}
+#theme:checked ~ .app .bar { background: color-mix(in oklab, var(--card), #000 24%) }
+.bar i {
+	display: block; height: 100%; border-radius: 999px;
+	background: linear-gradient(90deg, var(--accent-2), var(--accent));
+}
+
+/* =========================================================
+= DATA TABLE
+========================================================= */
+
+.data {
+	width: 100%; border-collapse: collapse;
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: 12px; overflow: hidden;
+	box-shadow: var(--shadow);
+	margin-top: 1rem; font-size: .95rem;
+}
+.data thead th {
+	text-align: left; padding: 10px 12px; font-weight: 700; color: var(--fg);
+	background: color-mix(in oklab, var(--card), var(--fg) 6%);
+	white-space: nowrap;
+}
+.data td {
+	padding: 10px 12px; border-top: 1px solid var(--border);
+}
+.data tbody tr:nth-child(even) td {
+	background: color-mix(in oklab, var(--card), var(--fg) 4%);
+}
+
+/* =========================================================
+= VIDEO
+========================================================= */
+
+.video-block {
+  margin-top: 20px;
+}
+
+.video-block h3 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px; /* smooth spacing */
+}
+
+.video-grid iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  border: none;
+  box-shadow: var(--shadow);
+}
+
+
+
+/* =========================================================
+= CUSTOM BULLETS
+========================================================= */
+
+.bullets { list-style: none; padding-left: 0 }
+.bullets > li { position: relative; padding-left: 40px; margin: 8px 0 }
+.bullets ul { list-style: none; margin: 6px 0 0 0; padding-left: 26px }
+.bullets ul > li { position: relative; padding-left: 24px; margin: 6px 0 }
+
+.bullets > li::before {
+  content: ''; position: absolute; left:0; top: -0.84em;
+  width: 50px; height: 50px;
+  background: url('pokeball.png') no-repeat center / contain;
+}
+.bullets ul > li::before {
+  content: ''; position: absolute; left: 0; top: 0em;
+  width: 30px; height: 30px;
+  background: url('pokeball.png') no-repeat center / contain;
+}
+
+/* =========================================================
+= FOOTER
+========================================================= */
+
+footer {
+	margin-top: auto; border-top: 1px solid var(--border);
+	color: var(--muted); padding: 20px 0;
+}
+
+/* =========================================================
+= GRADIENT CARDS
+========================================================= */
+
+#bio.card { background: linear-gradient(135deg, hsl(270, 64%, 73%), #5871f1); color: #fff; }
+#goals.card { background: linear-gradient(135deg, #a0c360, #34d3c6, #4649eb); color: #fff; }
+#learning-plan.card { background: linear-gradient(135deg, #ebc47f, #e66daa, #9a76ed); color: #fff; }
+#skills.card { background: linear-gradient(135deg, #8688f5, #4f8cef, #20d9f6); color: #fff; }
+#reflection.card { background: linear-gradient(135deg, #fbcfe8, #c084fc, #67e8f9); color: #121826; }
+
+#theme:checked ~ .app #bio.card { background: linear-gradient(135deg, #5a2d82, #273c75); }
+#theme:checked ~ .app #goals.card { background: linear-gradient(135deg, #065f46, #0f766e, #1e40af); }
+#theme:checked ~ .app #learning-plan.card { background: linear-gradient(135deg, #92400e, #9d174d, #5b21b6); }
+#theme:checked ~ .app #skills.card { background: linear-gradient(135deg, #1e1b4b, #1e3a8a, #155e75); }
+#theme:checked ~ .app #reflection.card { background: linear-gradient(135deg, #4c1d95, #7e22ce, #0e7490); color: #e6ecff; }
+
+/* =========================================================
+= FIX READABILITY INSIDE GRADIENT CARDS
+========================================================= */
+
+.card .data, .card .data th, .card .data td,
+.card .contact, .card .contact th, .card .contact td {
+  color: var(--fg) !important;
+}
+.card .data thead th {
+  background: color-mix(in oklab, var(--card), var(--fg) 6%) !important;
+}
+.card .data tbody tr:nth-child(even) td {
+  background: color-mix(in oklab, var(--card), var(--fg) 4%) !important;
+}
+
+
+/* ===== Achievements alignment tweak ===== */
+#goals .achv-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 260px); /* two fixed squares on the first row */
+  gap: 24px 28px;
+  justify-content: flex-start;  /* push the row to the LEFT */
+  justify-items: start;          /* each card aligns left within its column */
+}
+
+/* keep the card itself square and fixed width */
+#goals .achv-grid .achv-card{
+  width: 260px;
+}
+
+/* center ONLY the 3rd (bottom) card across both columns */
+#goals .achv-grid .achv-card:nth-child(3){
+  grid-column: 1 / -1;   /* span across the two columns */
+  justify-self: center;  /* center it horizontally */
+}
+
+@media (max-width: 900px){
+  /* on mobile, one column and centered cards */
+  #goals .achv-grid{
+    grid-template-columns: 1fr;
+    justify-content: center;
+    justify-items: center;
+  }
+  #goals .achv-grid .achv-card{
+    width: min(100%, 320px);
+  }
+}
+
+
+/* ===== Reflection Section Styles ===== */
+#reflection {
+	padding: 16px;
+}
+
+#reflection h2 {
+	margin-bottom: 10px;
+}
+
+#reflection h3 {
+	margin-top: 20px;
+	margin-bottom: 8px;
+}
+
+#reflection .reflection-points {
+	margin: 0 0 16px 20px;
+	line-height: 1.6;
+}
+
+/* Table Base */
+#reflection .reflection-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+}
+
+#reflection .reflection-table th,
+#reflection .reflection-table td {
+	border: 1px solid #ccc;
+	padding: 8px;
+	text-align: left;
+	vertical-align: top;
+}
+
+#reflection .reflection-table th {
+	background: #f2f2f2;
+}
+
+/* Signature */
+#reflection .signature {
+	margin-top: 16px;
+}
+
+/* ===== Responsive Stacking for Mobile ===== */
+@media (max-width: 640px) {
+	#reflection .reflection-table thead {
+		display: none; /* hide header */
+	}
+
+	#reflection .reflection-table,
+	#reflection .reflection-table tbody,
+	#reflection .reflection-table tr,
+	#reflection .reflection-table td {
+		display: block;
+		width: 100%;
+	}
+
+	#reflection .reflection-table tr {
+		margin-bottom: 16px;
+		border: 1px solid #ccc;
+		padding: 10px;
+		border-radius: 6px;
+		background: #fafafa;
+	}
+
+	#reflection .reflection-table td {
+		border: none;
+		padding: 6px 0;
+	}
+
+	#reflection .reflection-table td::before {
+		content: attr(data-label) ": ";
+		font-weight: bold;
+		display: inline-block;
+		width: 140px;
+		max-width: 50%;
+	}
+}
+
+/* Reflection grid (2 cards on top, table spans bottom) */
+.reflection-grid{
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: auto auto;
+	gap: 16px;
+}
+.reflection-grid .div1{ grid-area: 1 / 1 / 2 / 2 }
+.reflection-grid .div2{ grid-area: 1 / 2 / 2 / 3 }
+.reflection-grid .div3{ grid-area: 2 / 1 / 3 / 3 }
+
+/* Optional: make the bullet cards feel like “mini-cards” inside the gradient */
+#reflection .div1, #reflection .div2{
+	background: color-mix(in oklab, var(--card), var(--fg) 0%);
+	border: 1px solid color-mix(in oklab, var(--border), var(--fg) 8%);
+	border-radius: 12px;
+	padding: 14px;
+	box-shadow: var(--shadow);
+}
+
+/* Ensure table stays readable inside gradient cards */
+#reflection .reflection-table th,
+#reflection .reflection-table td{
+	color: var(--fg);
+	background: transparent;
+	border-color: color-mix(in oklab, var(--border), var(--fg) 8%);
+}
+#reflection .reflection-table thead th{
+	background: color-mix(in oklab, var(--card), var(--fg) 6%);
+}
+
+/* Responsive: stack to 1 column */
+@media (max-width: 900px){
+	.reflection-grid{
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+	}
+	.reflection-grid .div1{ grid-area: 1 / 1 / 2 / 2 }
+	.reflection-grid .div2{ grid-area: 2 / 1 / 3 / 2 }
+	.reflection-grid .div3{ grid-area: 3 / 1 / 4 / 2 }
+}
+
+
+.name-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px; /* space between text and signature */
+}
+
+.signature-inline {
+  display: inline-block !important;
+  height: 0.1em !important;
+  width: auto !important;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+/* keep signature tiny even inside .hero where other img rules are fixed-size */
+.hero img.signature-inline{
+  display: inline-block !important;
+  height: 1.4em !important;   /* tweak 0.5–0.8em as you like */
+  width: auto !important;
+  margin-left: 6px;
+  vertical-align: middle;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* optional, if you used the flex heading */
+.name-heading { display: inline-flex; align-items: center; gap: 6px; }
+
+
+
+.special-font {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.2em;   /* slightly larger than normal text */
+  font-weight: normal;
+  letter-spacing: 1px;
+}
